@@ -87,15 +87,15 @@ content script runs on every page for the video button; it does nothing
 until a video plays.
 
 For streamed videos to end up as one `.mp4`, install
-[ffmpeg](https://ffmpeg.org/): **Install ffmpeg** in **Options > General**
+[ffmpeg](https://ffmpeg.org/): **Install ffmpeg** in **Options > Tools**
 downloads the official build the yt-dlp project makes and checks it against
 its published checksum (on Windows and Linux), or put `ffmpeg.exe` on `PATH`,
-or choose it in **Options > General**. Without it UDM still downloads
+or choose it in **Options > Tools**. Without it UDM still downloads
 streams, as `.ts` files or as separate video and audio files.
 
 Videos on YouTube, Facebook, Instagram, Vimeo and the other sites
 [yt-dlp](https://github.com/yt-dlp/yt-dlp) reads need yt-dlp as well:
-**Install yt-dlp** in **Options > General** downloads yt-dlp's own release
+**Install yt-dlp** in **Options > Tools** downloads yt-dlp's own release
 for your system and checks it the same way, and **Keep yt-dlp up to date**
 updates it once a day. `winget install yt-dlp.yt-dlp` installs it with
 ffmpeg and Deno too, which yt-dlp uses to read YouTube's player; Setup offers

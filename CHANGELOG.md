@@ -21,6 +21,17 @@ Mac with Xcode. It reaches UDM through the app extension's native messaging, whi
 API. It was built for Safari but not yet run in it; [Known gaps](docs/known-gaps.md) lists what
 Safari leaves out, and [Install](docs/install.md#safari) how to turn it on.
 
+The README, the help pages and the project page show UDM (#269): screenshots of the main window,
+Download File Info, the download window with its connections, the video button, Options, the
+Scheduler and the window on Linux, each light and dark, in [`docs/images/`](docs/images/). Five
+step-by-step guides in [`docs/guides/`](docs/guides/) cover a first download, catching browser
+downloads, downloading overnight, a video from a page and resuming a broken download.
+`node tools/screenshots/shoot.js` takes the screenshots again after a window changes, from the
+preview page and the sample list the frontend's tests use, which now has two running downloads,
+a queued one and an interrupted one. The download window no longer wraps **Resume capability**
+in a font wider than Segoe UI, which pushed the address out of view on Linux, and the help pages
+send you to **Options > Tools**, where the window has kept the ffmpeg and yt-dlp buttons since 0.5.0.
+
 ## [0.5.0](release-notes/v0.5.0.md) - 2026-11-14
 
 Minor. Pullbay is now called UDM, with a new icon and a new window drawn with Tauri and styled

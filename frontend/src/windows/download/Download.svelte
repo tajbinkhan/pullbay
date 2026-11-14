@@ -250,6 +250,12 @@
     margin: 0;
   }
 
+  /* A wider font than Segoe UI (Linux's, macOS') would wrap "Resume
+     capability" and push the address out of the page. */
+  dt {
+    white-space: nowrap;
+  }
+
   .resume {
     padding-left: 78px;
   }

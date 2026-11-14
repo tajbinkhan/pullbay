@@ -22,6 +22,8 @@ use crate::testing::entry;
 use crate::windows::Label;
 
 const DAY: u64 = 86_400;
+/// Where the sample downloads come from.
+const SITE: &str = "https://downloads.example.com/files";
 /// 2026-10-21, the first download's day.
 const START: u64 = 1_792_540_800;
 
@@ -41,25 +43,36 @@ fn sample() -> AppState {
         ("UDM-Setup-0.1.0.exe", 5_725_224, Status::Done),
         ("UltraViewer_setup_6.6.exe", 3_638_558, Status::Done),
         ("launcher-0.6.0.exe", 44_774_195, Status::Done),
-        ("project-files-v2.zip", 353_802_000, Status::Done),
+        ("project-files-v2.zip", 353_802_000, Status::Interrupted),
         ("DTLite1260-2472i.exe", 46_153_400, Status::Done),
         ("office-suite-2016-x64.iso", 4_080_000_000, Status::Downloading),
         ("office-suite-2016-x86.iso", 4_080_000_000, Status::Done),
-        ("kubuntu-26.04.1-desktop-amd64.iso", 5_068_000_000, Status::Done),
+        ("kubuntu-26.04.1-desktop-amd64.iso", 5_068_000_000, Status::Downloading),
         ("rufus-4.15.exe", 1_981_808, Status::Done),
-        ("UDM-Setup-0.3.3.exe", 7_927_000, Status::Done),
-        ("udm-idm-test-40MB.bin", 41_943_040, Status::Confirming),
+        ("UDM-Setup-0.3.3.exe", 7_927_000, Status::Queued),
+        ("vlc-3.0.21-win64.exe", 41_943_040, Status::Confirming),
     ];
     let items = files
         .iter()
         .enumerate()
         .map(|(i, (name, total, status))| {
-            let done = if *status == Status::Downloading { total * 1628 / 10_000 } else { *total };
+            // Part of the file for the ones under way or stopped.
+            let done = match (i + 1, status) {
+                (14, _) => total * 4712 / 10_000,
+                (_, Status::Downloading) => total * 1628 / 10_000,
+                (_, Status::Interrupted) => total * 3807 / 10_000,
+                (_, Status::Queued) => 0,
+                _ => *total,
+            };
             let mut e = entry(i as u64 + 1, name, *status, *total, done);
+            e.url = format!("{SITE}/{name}").into();
             e.last_try = Some(START + DAY * (i as u64 / 2) + 3600 * 14 + 60 * i as u64);
-            if i == 2 {
-                e.description = Some("MP3: 64kbs, 44100Hz, Length: 3:05:42".into());
-            }
+            e.description = match i + 1 {
+                3 => Some("MP3: 64kbs, 44100Hz, Length: 3:05:42".into()),
+                6 => Some("Video: 1920x1080, 2:11:05".into()),
+                14 => Some("Kubuntu 26.04.1 LTS".into()),
+                _ => None,
+            };
             e
         })
         .collect();
@@ -70,38 +83,54 @@ fn sample() -> AppState {
         Settings { notify: Notify::Dialog, theme: Theme::Dark, tips_on_startup: false, ..Settings::default() };
     send(&mut s, Event::Settings { settings }, at);
     let queue: Queue = serde_json::from_value(json!({
-        "id": 1, "name": "Main queue", "max_concurrent": 1, "running": true, "order": [12]
+        "id": 1, "name": "Main queue", "max_concurrent": 2, "running": true, "order": [12, 14, 16]
     }))
     .unwrap();
     let sync: Queue =
         serde_json::from_value(json!({"id": 2, "name": "Synchronization queue", "max_concurrent": 1})).unwrap();
     send(&mut s, Event::Queues { items: vec![queue, sync] }, at);
-    // A running download, 16.28% done at about 15 MB/s, on eight
-    // connections.
+    // Two running downloads: one 16.28% done at about 2.9 MB/s, the other
+    // 47.12% done at about 5.6 MB/s, each on eight connections.
     let id = DownloadId::new(12);
-    let total = 4_080_000_000u64;
-    for (k, done) in [(0u64, total * 1600 / 10_000), (1, total * 1628 / 10_000)] {
-        let part = total / 8;
-        let segments = (0..8)
-            .map(|n| SegmentInfo {
-                start: ByteCount::new(n * part),
-                end: ByteCount::new((n + 1) * part - 1),
-                done: ByteCount::new(part * (130 + n * 7) / 1000),
-                state: SegmentState::Receiving,
-            })
-            .collect();
-        let event = Event::Progress {
-            id,
-            url: "http://127.0.0.1:8765/office-suite-2016-x64.iso".into(),
-            done: ByteCount::new(done),
-            total: Some(ByteCount::new(total)),
-            parts: None,
-            segments: Some(segments),
-        };
-        send(&mut s, event, at + Duration::from_secs(k * 4));
+    let running = [
+        (12u64, "office-suite-2016-x64.iso", 4_080_000_000u64, [1600u64, 1628], 130u64, 7u64),
+        (14, "kubuntu-26.04.1-desktop-amd64.iso", 5_068_000_000, [4668, 4712], 420, 12),
+    ];
+    for (n_id, name, total, steps, first, step) in running {
+        for (k, done) in steps.iter().map(|p| total * p / 10_000).enumerate() {
+            let part = total / 8;
+            let segments = (0..8)
+                .map(|n| SegmentInfo {
+                    start: ByteCount::new(n * part),
+                    end: ByteCount::new((n + 1) * part - 1),
+                    done: ByteCount::new(part * (first + n * step) / 1000),
+                    state: SegmentState::Receiving,
+                })
+                .collect();
+            let event = Event::Progress {
+                id: DownloadId::new(n_id),
+                url: format!("{SITE}/{name}").into(),
+                done: ByteCount::new(done),
+                total: Some(ByteCount::new(total)),
+                parts: None,
+                segments: Some(segments),
+            };
+            send(&mut s, event, at + Duration::from_secs(k as u64 * 4));
+        }
     }
     apply(&mut s, UiMessage::Select(vec![DownloadId::new(2)]));
     apply(&mut s, UiMessage::Sort(crate::contract::ColumnKey::LastTry));
+    // Columns wide enough for the names, as a user leaves them.
+    for (column, width) in [
+        (crate::contract::ColumnKey::Name, 260.0),
+        (crate::contract::ColumnKey::Size, 80.0),
+        (crate::contract::ColumnKey::Status, 84.0),
+        (crate::contract::ColumnKey::LastTry, 124.0),
+        (crate::contract::ColumnKey::Description, 230.0),
+    ] {
+        apply(&mut s, UiMessage::Resize(column, width));
+    }
+    apply(&mut s, UiMessage::PanelWidth(160.0));
     apply(&mut s, UiMessage::ShowProgress(id));
     s.done.insert(DownloadId::new(17));
     let _ = QueueId::MAIN;
@@ -126,6 +155,11 @@ fn fixtures() -> serde_json::Value {
         settings.theme = Theme::Light;
     }
     let light = projection::look(&s);
+    // Options then shows the theme that follows the system's, which suits
+    // both looks.
+    if let Some(settings) = s.settings.as_mut() {
+        settings.theme = Theme::System;
+    }
     apply(&mut s, UiMessage::Select(vec![DownloadId::new(2), DownloadId::new(4)]));
     apply(&mut s, UiMessage::AskRemove);
     // What Options shows beyond the settings: the tools, a paired phone

@@ -7,6 +7,21 @@ keep going after the browser closes.
 
 These pages were the README's manual. Each covers one part of UDM.
 
+## Step by step
+
+Short guides for the first things people do, with screenshots:
+
+- **[Your first download](guides/first-download.md)**: adding an address, the save-as dialog,
+  the download window and opening the file.
+- **[Catch browser downloads](guides/catch-browser-downloads.md)**: connecting the extension, and
+  why the browser sometimes keeps a download.
+- **[Download overnight](guides/download-overnight.md)**: a queue that starts at night and turns
+  the computer off when it is done.
+- **[A video from a page](guides/video-from-a-page.md)**: ffmpeg and yt-dlp, the video button, and
+  picking a quality.
+- **[Resume a broken download](guides/resume-a-broken-download.md)**: carrying on after a crash, and
+  giving an expired download a new link.
+
 ## Start here
 
 - **[Install](install.md)**: Setup, the portable zip, the `.dmg`, the Linux packages, loading the

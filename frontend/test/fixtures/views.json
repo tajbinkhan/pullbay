@@ -977,21 +977,21 @@
     },
     "done": {
       "view": {
-        "address": "http://127.0.0.1:8765/udm-idm-test-40MB.bin",
+        "address": "https://downloads.example.com/files/vlc-3.0.21-win64.exe",
         "canOpen": true,
         "canOpenWith": false,
         "dragOut": false,
         "failed": false,
         "headline": "Download complete",
         "id": 17,
-        "savedAs": "/home/u/Downloads/udm-idm-test-40MB.bin",
+        "savedAs": "/home/u/Downloads/vlc-3.0.21-win64.exe",
         "sizeLine": "Downloaded 40.00 MB (41943040 Bytes)"
       },
       "window": "done"
     },
     "download": {
       "view": {
-        "address": "http://127.0.0.1:8765/office-suite-2016-x64.iso",
+        "address": "https://downloads.example.com/files/office-suite-2016-x64.iso",
         "canResume": false,
         "details": false,
         "doneTab": true,
@@ -1535,7 +1535,7 @@
       "view": {
         "count": 2,
         "host": "127.0.0.1",
-        "ownSite": true,
+        "ownSite": false,
         "realm": "Private files",
         "refused": false,
         "user": ""
@@ -1550,7 +1550,7 @@
               "key": "name",
               "shown": true,
               "title": "File Name",
-              "width": 150
+              "width": 260
             },
             {
               "key": "queue",
@@ -1562,13 +1562,13 @@
               "key": "size",
               "shown": true,
               "title": "Size",
-              "width": 70
+              "width": 80
             },
             {
               "key": "status",
               "shown": true,
               "title": "Status",
-              "width": 72
+              "width": 84
             },
             {
               "key": "timeLeft",
@@ -1586,13 +1586,13 @@
               "key": "lastTry",
               "shown": true,
               "title": "Last Try Date",
-              "width": 65
+              "width": 124
             },
             {
               "key": "description",
               "shown": true,
               "title": "Description",
-              "width": 120
+              "width": 230
             },
             {
               "key": "progress",
@@ -1632,7 +1632,7 @@
             "redownload": true,
             "refresh": false,
             "resume": false,
-            "resumeAll": false,
+            "resumeAll": true,
             "stop": false,
             "stopAll": true,
             "verify": false
@@ -1687,7 +1687,7 @@
               "sort": null,
               "sortable": true,
               "title": "File Name",
-              "width": 150
+              "width": 260
             },
             {
               "key": "queue",
@@ -1701,14 +1701,14 @@
               "sort": null,
               "sortable": true,
               "title": "Size",
-              "width": 70
+              "width": 80
             },
             {
               "key": "status",
               "sort": null,
               "sortable": true,
               "title": "Status",
-              "width": 72
+              "width": 84
             },
             {
               "key": "timeLeft",
@@ -1729,14 +1729,14 @@
               "sort": "ascending",
               "sortable": true,
               "title": "Last Try Date",
-              "width": 65
+              "width": 124
             },
             {
               "key": "description",
               "sort": null,
               "sortable": true,
               "title": "Description",
-              "width": 120
+              "width": 230
             }
           ],
           "defaultColumns": [
@@ -1825,7 +1825,7 @@
           "newerInstallable": false,
           "nextTip": 0,
           "packages": [],
-          "panelWidth": 143,
+          "panelWidth": 160,
           "queues": [
             {
               "id": 1,
@@ -2073,7 +2073,7 @@
             "tone": "normal"
           },
           {
-            "description": "",
+            "description": "Video: 1920x1080, 2:11:05",
             "finished": true,
             "fraction": 1.0,
             "icon": "video",
@@ -2150,20 +2150,20 @@
           },
           {
             "description": "",
-            "finished": true,
-            "fraction": 1.0,
+            "finished": false,
+            "fraction": 0.3806999921798706,
             "icon": "archive",
             "id": 10,
             "lastTry": "2026-10-25 14:09",
             "name": "project-files-v2.zip",
             "page": "",
-            "progress": "100.00%",
+            "progress": "38.07%",
             "queued": false,
             "referrer": "",
             "saveTo": "/home/u/Downloads",
             "size": "337.41 MB",
             "speed": "",
-            "status": "Complete",
+            "status": "Interrupted",
             "timeLeft": "",
             "tone": "normal"
           },
@@ -2225,23 +2225,23 @@
             "tone": "normal"
           },
           {
-            "description": "",
-            "finished": true,
-            "fraction": 1.0,
+            "description": "Kubuntu 26.04.1 LTS",
+            "finished": false,
+            "fraction": 0.47119998931884766,
             "icon": "program",
             "id": 14,
             "lastTry": "2026-10-27 14:13",
             "name": "kubuntu-26.04.1-desktop-amd64.iso",
             "page": "",
-            "progress": "100.00%",
-            "queued": false,
+            "progress": "47.12%",
+            "queued": true,
             "referrer": "",
             "saveTo": "/home/u/Downloads",
             "size": "4.72 GB",
-            "speed": "",
-            "status": "Complete",
-            "timeLeft": "",
-            "tone": "normal"
+            "speed": "5.32 MB/s",
+            "status": "47.12%",
+            "timeLeft": "8m 1s",
+            "tone": "running"
           },
           {
             "description": "",
@@ -2264,20 +2264,20 @@
           },
           {
             "description": "",
-            "finished": true,
-            "fraction": 1.0,
+            "finished": false,
+            "fraction": 0.0,
             "icon": "program",
             "id": 16,
             "lastTry": "2026-10-28 14:15",
             "name": "UDM-Setup-0.3.3.exe",
             "page": "",
-            "progress": "100.00%",
-            "queued": false,
+            "progress": "0.00%",
+            "queued": true,
             "referrer": "",
             "saveTo": "/home/u/Downloads",
             "size": "7.56 MB",
             "speed": "",
-            "status": "Complete",
+            "status": "Queued",
             "timeLeft": "",
             "tone": "normal"
           }
@@ -2562,7 +2562,7 @@
           "startWhileAsking": false,
           "startWithSystem": false,
           "tempDir": "",
-          "theme": "light",
+          "theme": "system",
           "trayIcon": true,
           "userAgent": "",
           "videoAutoCapture": false,
@@ -3811,7 +3811,7 @@
     },
     "properties": {
       "view": {
-        "address": "http://127.0.0.1:8765/HandBrake-1.11.2-x86_64-Win_GUI.exe",
+        "address": "https://downloads.example.com/files/HandBrake-1.11.2-x86_64-Win_GUI.exe",
         "canMove": true,
         "canOpen": true,
         "description": "",
@@ -3831,7 +3831,7 @@
     },
     "refresh": {
       "view": {
-        "address": "http://127.0.0.1:8765/Screen-Capture (3).mp3",
+        "address": "https://downloads.example.com/files/Screen-Capture (3).mp3",
         "connected": true,
         "id": 3,
         "mismatch": null,
@@ -3859,11 +3859,11 @@
           "Programs",
           "Video"
         ],
-        "category": "General",
+        "category": "Programs",
         "description": "",
         "duplicate": null,
         "folders": [
-          "/home/u/Downloads/udm-idm-test-40MB.bin"
+          "/home/u/Downloads/vlc-3.0.21-win64.exe"
         ],
         "icon": "program",
         "id": 17,
@@ -3881,9 +3881,9 @@
         ],
         "rememberFolder": false,
         "remembered": "/home/u/Downloads",
-        "saveAs": "/home/u/Downloads/udm-idm-test-40MB.bin",
+        "saveAs": "/home/u/Downloads/vlc-3.0.21-win64.exe",
         "size": "40.00 MB",
-        "url": "http://127.0.0.1:8765/udm-idm-test-40MB.bin"
+        "url": "https://downloads.example.com/files/vlc-3.0.21-win64.exe"
       },
       "window": "saveAs"
     },
@@ -3901,6 +3901,22 @@
                 "size": "3.80 GB",
                 "status": "16.28%",
                 "timeLeft": "19m 56s"
+              },
+              {
+                "icon": "program",
+                "id": 14,
+                "name": "kubuntu-26.04.1-desktop-amd64.iso",
+                "size": "4.72 GB",
+                "status": "47.12%",
+                "timeLeft": "8m 1s"
+              },
+              {
+                "icon": "program",
+                "id": 16,
+                "name": "UDM-Setup-0.3.3.exe",
+                "size": "7.56 MB",
+                "status": "Queued",
+                "timeLeft": ""
               }
             ]
           },
@@ -3927,7 +3943,7 @@
             "forceClose": false,
             "id": 1,
             "main": true,
-            "maxConcurrent": 1,
+            "maxConcurrent": 2,
             "name": "Main queue",
             "once": false,
             "openFile": "",

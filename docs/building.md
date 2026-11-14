@@ -60,6 +60,7 @@ differs.
 | `installer/windows/make-firefox.ps1` | The same in PowerShell, which Setup's build uses to check the copy |
 | `installer/render-icons.js` | Renders `assets/icon-1024.png` to the extension's PNGs and `assets/icon-256.png` with headless Chrome |
 | `installer/windows/udm.ico` | Setup and shortcut icon, packed from `extension/chromium/icons` by `make-icon.js` |
+| `tools/screenshots/` | `shoot.js`, which takes the screenshots in `docs/images/` again from the preview page and the extension's video button ([how](../tools/screenshots/README.md)) |
 | `docs/adr/` | Architecture decisions |
 | `GLOSSARY.md` | The names of the windows and dialogs |
 
@@ -99,6 +100,15 @@ the fixtures again (the tests fail until they match):
 
 ```bash
 UDM_WRITE_BINDINGS=1 UDM_WRITE_FIXTURES=1 cargo test -p udm-ui
+```
+
+The screenshots in `docs/images/` are drawn the same way, from the fixtures'
+sample list. After a window changes, take them again, light and dark, as
+WebP (it needs Playwright and its Chromium where Node finds them; see
+[tools/screenshots](../tools/screenshots/README.md)):
+
+```bash
+node tools/screenshots/shoot.js
 ```
 
 The server image (`Dockerfile`) builds `udm-app` with

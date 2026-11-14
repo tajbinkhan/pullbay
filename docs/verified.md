@@ -1,5 +1,24 @@
 # Verified
 
+- Screenshots and step-by-step guides (#269). `node tools/screenshots/shoot.js`
+  ran here (Ubuntu 24.04, Playwright's Chromium) and wrote every picture in
+  `docs/images/` except the Linux ones, each under 200 KB at twice the
+  window's size; each was looked at in both looks. The richer sample list
+  (`crates/ui/src/fixtures.rs`) was written with `UDM_WRITE_FIXTURES=1`, and
+  the frontend's tests pass on it (one expectation follows the sample's new
+  file name and category). The video button is the extension's content
+  scripts on a page the script serves to the browser itself, with the
+  worker's menu built by `media.js`; the browser reached no network. The
+  Linux pictures are the debug `udm-gui` and `udm-daemon` under Xvfb and
+  openbox with a scratch home, fed by `tools/bench/faultserver.py` and
+  `udm-cli get` ([how](../tools/screenshots/README.md#the-linux-shot)). The
+  project page was put together as `pages.yml` does and drawn at 1200 and 390
+  pixels wide in both looks, without sideways scrolling. Every menu, button
+  and setting the guides name was checked against the frontend's components
+  and `crates/ui/src/lang/en.json`. Not tried: the script on Windows or
+  macOS, where the windows get those systems' fonts, and the Pages workflow
+  itself.
+
 - The extension made ready for the browser stores (#248). The extension's
   tests build both store zips into a temporary folder and read them back with
   a zip reader of their own (each entry's local header, size and CRC): every
