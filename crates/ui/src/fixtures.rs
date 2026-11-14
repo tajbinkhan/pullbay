@@ -35,22 +35,22 @@ fn sample() -> AppState {
     };
     let files: [(&str, u64, Status); 17] = [
         ("interview-notes.pdf", 70_686, Status::Done),
-        ("HandBrake-1.11.2-x86_64-Win_GUI.exe", 25_323_520, Status::Done),
-        ("Screen-Capture (3).mp3", 88_749_000, Status::Done),
+        ("video-converter-1.11.2-setup.exe", 25_323_520, Status::Done),
+        ("lecture-recording-2026-10-22.mp3", 88_749_000, Status::Done),
         ("udm-windows.zip", 4_445_962, Status::Done),
-        ("sf-pro-display.zip", 904_396, Status::Done),
+        ("display-fonts.zip", 904_396, Status::Done),
         ("Open.Movie.2026.1080p.mkv", 8_740_000_000, Status::Done),
         ("UDM-Setup-0.1.0.exe", 5_725_224, Status::Done),
-        ("UltraViewer_setup_6.6.exe", 3_638_558, Status::Done),
+        ("remote-desktop-6.6-setup.exe", 3_638_558, Status::Done),
         ("launcher-0.6.0.exe", 44_774_195, Status::Done),
         ("project-files-v2.zip", 353_802_000, Status::Interrupted),
-        ("DTLite1260-2472i.exe", 46_153_400, Status::Done),
-        ("office-suite-2016-x64.iso", 4_080_000_000, Status::Downloading),
-        ("office-suite-2016-x86.iso", 4_080_000_000, Status::Done),
-        ("kubuntu-26.04.1-desktop-amd64.iso", 5_068_000_000, Status::Downloading),
-        ("rufus-4.15.exe", 1_981_808, Status::Done),
+        ("disc-image-tool-12.6.exe", 46_153_400, Status::Done),
+        ("office-suite-24.8-x64.iso", 4_080_000_000, Status::Downloading),
+        ("office-suite-24.8-x86.iso", 4_080_000_000, Status::Done),
+        ("linux-desktop-26.04-amd64.iso", 5_068_000_000, Status::Downloading),
+        ("usb-writer-4.15.exe", 1_981_808, Status::Done),
         ("UDM-Setup-0.3.3.exe", 7_927_000, Status::Queued),
-        ("vlc-3.0.21-win64.exe", 41_943_040, Status::Confirming),
+        ("summer-photos.zip", 41_943_040, Status::Confirming),
     ];
     let items = files
         .iter()
@@ -68,9 +68,9 @@ fn sample() -> AppState {
             e.url = format!("{SITE}/{name}").into();
             e.last_try = Some(START + DAY * (i as u64 / 2) + 3600 * 14 + 60 * i as u64);
             e.description = match i + 1 {
-                3 => Some("MP3: 64kbs, 44100Hz, Length: 3:05:42".into()),
+                3 => Some("MP3, 64 kbps, 3:05:42".into()),
                 6 => Some("Video: 1920x1080, 2:11:05".into()),
-                14 => Some("Kubuntu 26.04.1 LTS".into()),
+                14 => Some("Desktop installer, 26.04".into()),
                 _ => None,
             };
             e
@@ -93,8 +93,8 @@ fn sample() -> AppState {
     // 47.12% done at about 5.6 MB/s, each on eight connections.
     let id = DownloadId::new(12);
     let running = [
-        (12u64, "office-suite-2016-x64.iso", 4_080_000_000u64, [1600u64, 1628], 130u64, 7u64),
-        (14, "kubuntu-26.04.1-desktop-amd64.iso", 5_068_000_000, [4668, 4712], 420, 12),
+        (12u64, "office-suite-24.8-x64.iso", 4_080_000_000u64, [1600u64, 1628], 130u64, 7u64),
+        (14, "linux-desktop-26.04-amd64.iso", 5_068_000_000, [4668, 4712], 420, 12),
     ];
     for (n_id, name, total, steps, first, step) in running {
         for (k, done) in steps.iter().map(|p| total * p / 10_000).enumerate() {
@@ -162,6 +162,8 @@ fn fixtures() -> serde_json::Value {
     }
     apply(&mut s, UiMessage::Select(vec![DownloadId::new(2), DownloadId::new(4)]));
     apply(&mut s, UiMessage::AskRemove);
+    // The main window then shows one download picked, as it was.
+    apply(&mut s, UiMessage::Select(vec![DownloadId::new(2)]));
     // What Options shows beyond the settings: the tools, a paired phone
     // and a pairing code, and the browsers.
     if let Some(settings) = s.settings.as_mut() {

@@ -100,6 +100,7 @@ figure { margin: 0; }
 figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; }
 figcaption { margin-top: 8px; color: var(--muted); font-size: 0.95rem; }
 .main-shot { margin-bottom: 24px; }
+.wide-shot { margin-top: 24px; }
 .shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 24px 16px; align-items: start; }
 
 .table-scroll { overflow-x: auto; }

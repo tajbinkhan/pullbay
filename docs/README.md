@@ -9,7 +9,7 @@ These pages were the README's manual. Each covers one part of UDM.
 
 ## Step by step
 
-Short guides for the first things people do, with screenshots:
+Short guides for the first things people do, most with a screenshot:
 
 - **[Your first download](guides/first-download.md)**: adding an address, the save-as dialog,
   the download window and opening the file.

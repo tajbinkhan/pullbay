@@ -401,7 +401,7 @@ begin
   if not (Ok and YtDlpFound()) then
     SuppressibleMsgBox('winget could not install the video tools (exit code ' + IntToStr(Code) + ').' + #13#10#13#10 +
       'UDM still downloads ordinary files. For YouTube and other video sites, use Install yt-dlp ' +
-      'and Install ffmpeg in UDM''s Options > General, or run this later:' + #13#10 +
+      'and Install ffmpeg in UDM''s Options > Tools, or run this later:' + #13#10 +
       '    winget install yt-dlp.yt-dlp',
       mbError, MB_OK, IDOK);
 end;
@@ -450,7 +450,7 @@ begin
   else
     Video := #13#10#13#10 +
       'For YouTube and other video sites, use Install yt-dlp and Install ffmpeg in UDM''s ' +
-      'Options > General, or run: winget install yt-dlp.yt-dlp';
+      'Options > Tools, or run: winget install yt-dlp.yt-dlp';
   if OldDir <> '' then
     Video := #13#10#13#10 +
       OldName + ' is now called UDM. Remove the ' + OldName + ' extension from the browser first: ' +

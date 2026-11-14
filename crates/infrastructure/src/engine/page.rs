@@ -66,7 +66,7 @@ pub(super) fn run(
     let yt_dlp = ytdlp::find(req.ffmpeg.as_deref()).ok_or_else(|| EngineError::Refused(ytdlp::MISSING.into()))?;
     if choice.audio_only.is_some() && req.ffmpeg.is_none() {
         return Err(EngineError::Refused(
-            "Saving only the sound needs ffmpeg. Install it, or choose it in Options > General.".into(),
+            "Saving only the sound needs ffmpeg. Install it, or choose it in Options > Tools.".into(),
         ));
     }
     let stem = stream::stem(req);

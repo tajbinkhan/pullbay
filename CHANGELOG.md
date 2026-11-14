@@ -30,7 +30,8 @@ downloads, downloading overnight, a video from a page and resuming a broken down
 preview page and the sample list the frontend's tests use, which now has two running downloads,
 a queued one and an interrupted one. The download window no longer wraps **Resume capability**
 in a font wider than Segoe UI, which pushed the address out of view on Linux, and the help pages
-send you to **Options > Tools**, where the window has kept the ffmpeg and yt-dlp buttons since 0.5.0.
+and UDM's own messages about ffmpeg, yt-dlp and gallery-dl send you to **Options > Tools**, where
+the window has kept those programs' buttons since 0.5.0.
 
 ## [0.5.0](release-notes/v0.5.0.md) - 2026-11-14
 

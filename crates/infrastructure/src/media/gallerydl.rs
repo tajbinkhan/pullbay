@@ -21,7 +21,7 @@
 //! as yt-dlp's is not, so its answer is the same for everyone; no cookies
 //! are handed to it.
 //!
-//! gallery-dl is found in UDM's tools folder (Options > General
+//! gallery-dl is found in UDM's tools folder (Options > Tools
 //! installs it there), on `PATH`, or next to UDM's programs.
 
 use std::io::{BufRead as _, BufReader, Read as _};

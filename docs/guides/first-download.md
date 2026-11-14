@@ -18,7 +18,7 @@ Download one file with UDM, from an address you paste. Takes two minutes.
 
    <picture>
      <source media="(prefers-color-scheme: dark)" srcset="../images/save-as-dark.webp">
-     <img src="../images/save-as-light.webp" alt="Download File Info, with the address, the category Programs, the file it saves as, and the Start Download, Download Later and Cancel buttons" width="576">
+     <img src="../images/save-as-light.webp" alt="Download File Info, with the address, the category Compressed, the file it saves as, and the Start Download, Download Later and Cancel buttons" width="576">
    </picture>
 
 5. **Watch it come in.** The download window shows the size, how much is in, the transfer rate and
@@ -29,7 +29,7 @@ Download one file with UDM, from an address you paste. Takes two minutes.
 
    <picture>
      <source media="(prefers-color-scheme: dark)" srcset="../images/download-dark.webp">
-     <img src="../images/download-light.webp" alt="The download window of a running download with its details shown: the status, the progress bar, and eight connections with how much each has downloaded" width="552">
+     <img src="../images/download-light.webp" alt="The download window of a running download with its details shown: the status, the progress bar, and the connections with how much each has downloaded" width="552">
    </picture>
 
 6. **Open the file.** When it is done, UDM says so in a notification (on Windows with **Open** and

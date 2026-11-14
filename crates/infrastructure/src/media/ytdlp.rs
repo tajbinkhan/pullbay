@@ -10,7 +10,7 @@
 //! A playlist or channel page lists its videos instead (`--flat-playlist`,
 //! so each video's page is not read yet), and the window picks among them.
 //!
-//! yt-dlp is found in UDM's tools folder (Options > General installs it
+//! yt-dlp is found in UDM's tools folder (Options > Tools installs it
 //! there), on `PATH`, next to UDM's programs, or next to ffmpeg.
 
 use std::io::Read as _;
@@ -28,7 +28,7 @@ use udm_domain::media::{
 
 /// Why a page cannot be read without yt-dlp, in words for the user.
 pub const MISSING: &str =
-    "Videos on YouTube, Facebook, Instagram, Vimeo and other sites need yt-dlp. Install it in UDM's Options > General, or put yt-dlp next to UDM.";
+    "Videos on YouTube, Facebook, Instagram, Vimeo and other sites need yt-dlp. Install it in UDM's Options > Tools, or put yt-dlp next to UDM.";
 
 /// How long reading a page with yt-dlp may take before it is given up: a
 /// little less than the extension waits for the answer (60 seconds).

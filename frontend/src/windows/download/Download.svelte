@@ -79,10 +79,8 @@
             <dl class="pairs">
               <dt>{t('Status')}</dt>
               <dd>{view.status}</dd>
-            </dl>
-            <dl class="pairs gap">
-              <dt>{t('File size')}</dt>
-              <dd>{view.size}</dd>
+              <dt class="gap">{t('File size')}</dt>
+              <dd class="gap">{view.size}</dd>
               <dt>{t('Downloaded')}</dt>
               <dd>{view.downloaded}</dd>
               <dt>{t('Transfer rate')}</dt>
@@ -234,15 +232,15 @@
     white-space: nowrap;
   }
 
+  /* The labels' column grows for a longer label (a wider font than
+     Segoe UI, a longer language) rather than wrap it, which would push the
+     address out of the page. */
   .pairs {
     display: grid;
-    grid-template-columns: 102px 1fr;
+    grid-template-columns: minmax(102px, max-content) 1fr;
+    column-gap: 8px;
     margin: 0;
     row-gap: 1px;
-  }
-
-  .pairs.gap {
-    margin-top: 8px;
   }
 
   dt,
@@ -250,10 +248,12 @@
     margin: 0;
   }
 
-  /* A wider font than Segoe UI (Linux's, macOS') would wrap "Resume
-     capability" and push the address out of the page. */
   dt {
     white-space: nowrap;
+  }
+
+  .gap {
+    margin-top: 8px;
   }
 
   .resume {

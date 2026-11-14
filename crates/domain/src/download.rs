@@ -618,7 +618,7 @@ pub enum DownloadError {
     StartedWhileSaving,
     #[error("Only a finished download whose file is still there can be converted.")]
     NotConvertible,
-    #[error("Converting needs ffmpeg. Install it, or choose it in Options > General.")]
+    #[error("Converting needs ffmpeg. Install it, or choose it in Options > Tools.")]
     NoFfmpeg,
     #[error("download {0} is not waiting to be started")]
     NotWaiting(DownloadId),

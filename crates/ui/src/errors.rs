@@ -465,7 +465,7 @@ pub mod text {
         match e {
         GalleryError::NotWebPage(url) => trf!(lang, "{url} is not an http or https page.", url = url),
         GalleryError::Missing => {
-            lang.tr("Image galleries need gallery-dl. Install it in UDM's Options > General, or put gallery-dl next to UDM.")
+            lang.tr("Image galleries need gallery-dl. Install it in UDM's Options > Tools, or put gallery-dl next to UDM.")
                 .to_string()
         }
         GalleryError::Unsupported => lang.tr("gallery-dl does not know this site.").to_string(),
@@ -652,9 +652,7 @@ pub mod text {
             E::NotConvertible => {
                 lang.tr("Only a finished download whose file is still there can be converted.").to_string()
             }
-            E::NoFfmpeg => {
-                lang.tr("Converting needs ffmpeg. Install it, or choose it in Options > General.").to_string()
-            }
+            E::NoFfmpeg => lang.tr("Converting needs ffmpeg. Install it, or choose it in Options > Tools.").to_string(),
             E::NotWaiting(id) => trf!(lang, "download {id} is not waiting to be started", id = id),
             E::AnswerNoFileName => lang.tr("the download has no file name").to_string(),
             E::AnswerNoFolder => lang.tr("the download has no folder").to_string(),

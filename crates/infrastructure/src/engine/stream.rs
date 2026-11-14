@@ -293,7 +293,7 @@ pub(super) fn run(
     shared: &Shared,
 ) -> Result<Saved, EngineError> {
     if choice.audio_only.is_some() && req.ffmpeg.is_none() {
-        return Err(refused("Saving only the sound needs ffmpeg. Install it, or choose it in Options > General."));
+        return Err(refused("Saving only the sound needs ffmpeg. Install it, or choose it in Options > Tools."));
     }
     let (main, extra, subtitles) = load_tracks(agent, req, choice)?;
     // For the sound alone, a separate audio track is all that is fetched.

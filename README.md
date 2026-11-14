@@ -94,7 +94,7 @@ ranges, UDM took 3.3 s and IDM 16.1 s. When the server was slow to answer, UDM t
 <table>
   <tr>
     <td align="center" width="50%"><a href="docs/images/save-as-light.webp"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/save-as-dark.webp"><img src="docs/images/save-as-light.webp" alt="The Download File Info dialog with a file's address, category, save-as path and size" width="400"></picture></a><br><sub><b>Download File Info</b>: the name, category and folder of a caught download</sub></td>
-    <td align="center" width="50%"><a href="docs/images/download-light.webp"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/download-dark.webp"><img src="docs/images/download-light.webp" alt="A download's window showing its progress and eight connections" width="400"></picture></a><br><sub><b>The download window</b>, with eight connections at work</sub></td>
+    <td align="center" width="50%"><a href="docs/images/download-light.webp"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/download-dark.webp"><img src="docs/images/download-light.webp" alt="A download's window showing its progress and its connections" width="400"></picture></a><br><sub><b>The download window</b>, with its connections at work</sub></td>
   </tr>
   <tr>
     <td align="center" width="50%"><a href="docs/images/video-light.webp"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/video-dark.webp"><img src="docs/images/video-light.webp" alt="A video in the browser with UDM's Download this video button and its list of qualities and subtitles" width="400"></picture></a><br><sub><b>Download this video</b> over a player in the browser, with each quality</sub></td>

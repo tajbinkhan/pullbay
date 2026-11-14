@@ -94,7 +94,7 @@ pub fn ffmpeg(settings: &Settings) -> Option<PathBuf> {
     if !set.is_empty() {
         return Some(PathBuf::from(set)).filter(|p| p.is_file());
     }
-    // The one UDM installed (Options > General), then the PATH's.
+    // The one UDM installed (Options > Tools), then the PATH's.
     let own = crate::paths::tools_dir().map(|d| d.join(crate::platform::exe_name("ffmpeg")));
     let path = std::env::var_os("PATH").map(|p| std::env::split_paths(&p).collect::<Vec<_>>()).unwrap_or_default();
     own.into_iter()

@@ -26,12 +26,12 @@ describe('the dialogs', () => {
   it('Download File Info answers with the category and the file', async () => {
     const calls = shell('save-as-17', 'save-as');
     render(SaveAs);
-    expect((screen.getByLabelText('Save As') as HTMLInputElement).value).toBe('/home/u/Downloads/vlc-3.0.21-win64.exe');
+    expect((screen.getByLabelText('Save As') as HTMLInputElement).value).toBe('/home/u/Downloads/summer-photos.zip');
     await fireEvent.click(screen.getByRole('button', { name: 'Download Later' }));
     expect(sent(calls, 'answer_download').at(-1)?.args).toEqual({
       answer: {
-        category: 'Programs',
-        saveAs: '/home/u/Downloads/vlc-3.0.21-win64.exe',
+        category: 'Compressed',
+        saveAs: '/home/u/Downloads/summer-photos.zip',
         rememberFolder: false,
         description: '',
         start: false,
@@ -50,7 +50,7 @@ describe('the dialogs', () => {
     });
     render(SaveAs);
     expect(await screen.findByText('UDM may not save files in this folder. Saving there needs administrator rights.')).toBeTruthy();
-    expect(sent(calls, 'check_save_folder').at(-1)?.args).toEqual({ saveAs: '/home/u/Downloads/vlc-3.0.21-win64.exe' });
+    expect(sent(calls, 'check_save_folder').at(-1)?.args).toEqual({ saveAs: '/home/u/Downloads/summer-photos.zip' });
     const start = screen.getByRole('button', { name: 'Start Download' }) as HTMLButtonElement;
     expect(start.disabled).toBe(true);
     await fireEvent.click(screen.getByLabelText('Save there with administrator rights'));

@@ -755,7 +755,7 @@ pub struct Settings {
     /// Send a package's archives to the Recycle Bin once they are unpacked.
     pub unpack_recycle: bool,
     /// Look for a newer yt-dlp once a day and install it, when UDM
-    /// installed yt-dlp (Options > General). Off unless the user turns it on.
+    /// installed yt-dlp (Options > Tools). Off unless the user turns it on.
     #[serde(default)]
     pub ytdlp_auto_update: bool,
     /// Ask before removing downloads from the list.

@@ -16,8 +16,8 @@ shut it down. This uses the main queue and the Scheduler.
 4. **Say what happens after.** Tick **Turn off computer when done** and pick **Shut down**,
    **Sleep** or **Hibernate**, or tick **Exit UDM when done**. **Number of retries for each file if
    downloading failed** tries a failed download again before the queue counts it as done.
-5. **Click Apply.** The **Files in the queue** tab shows the queue's downloads in order: **Move up**
-   and **Move down** change the order, and **files at the same time** sets how many run at once.
+5. **Click Apply.** The **Files in the queue** tab shows the queue's downloads in order: the arrow
+   buttons (**Move up** and **Move down**) change the order, and **files at the same time** sets how many run at once.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="../images/scheduler-dark.webp">

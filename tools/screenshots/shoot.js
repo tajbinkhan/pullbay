@@ -4,6 +4,7 @@
 //     node tools/screenshots/shoot.js                 # every shot
 //     node tools/screenshots/shoot.js main video      # only these
 //     node tools/screenshots/shoot.js --scale 1.5     # a smaller picture
+//     node tools/screenshots/shoot.js --out /tmp/shots  # elsewhere than docs/images
 //
 // The windows are UDM's real frontend drawn by its preview page
 // (frontend/dev/), which feeds each window the snapshot the shell's own
@@ -33,6 +34,7 @@ const ROOT = path.resolve(__dirname, "..", "..");
 const FRONTEND = path.join(ROOT, "frontend");
 const EXTENSION = path.join(ROOT, "extension", "chromium");
 const OUT = path.join(ROOT, "docs", "images");
+const USAGE = "usage: node tools/screenshots/shoot.js [--scale N] [--quality Q] [--out DIR]";
 const LOOKS = ["light", "dark"];
 
 // Each window at the size the shell opens it (Label::size in
@@ -48,13 +50,16 @@ const WINDOWS = {
 const SHOTS = [...Object.keys(WINDOWS), "video"];
 
 function parseArgs(argv) {
-  const opts = { scale: 2, quality: 0.9, only: [] };
+  const opts = { scale: 2, quality: 0.9, out: OUT, only: [] };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--scale") opts.scale = Number(argv[++i]);
     else if (a === "--quality") opts.quality = Number(argv[++i]);
-    else if (a === "-h" || a === "--help") {
-      process.stdout.write(`usage: node tools/screenshots/shoot.js [--scale N] [--quality Q] [${SHOTS.join("|")}]...\n`);
+    else if (a === "--out") {
+      if (!argv[i + 1]) throw new Error("--out needs a folder");
+      opts.out = path.resolve(argv[++i]);
+    } else if (a === "-h" || a === "--help") {
+      process.stdout.write(`${USAGE} [${SHOTS.join("|")}]...\n`);
       process.exit(0);
     } else if (SHOTS.includes(a)) opts.only.push(a);
     else throw new Error(`unknown argument ${a}; the shots are ${SHOTS.join(", ")}`);
@@ -143,9 +148,9 @@ async function toWebp(encoder, png, quality) {
 
 async function save(encoder, name, png, opts) {
   const webp = await toWebp(encoder, png, opts.quality);
-  const file = path.join(OUT, `${name}.webp`);
+  const file = path.join(opts.out, `${name}.webp`);
   fs.writeFileSync(file, webp);
-  process.stdout.write(`${path.relative(ROOT, file)}  ${(webp.length / 1024).toFixed(0)} KB\n`);
+  process.stdout.write(`${path.relative(process.cwd(), file) || file}  ${(webp.length / 1024).toFixed(0)} KB\n`);
 }
 
 async function shootWindow(browser, encoder, base, kind, look, opts) {
@@ -173,6 +178,9 @@ async function shootWindow(browser, encoder, base, kind, look, opts) {
   await save(encoder, `${kind}-${look}`, await page.screenshot({ type: "png" }), opts);
   await context.close();
 }
+
+// The video page's height, which shows the text under the player whole.
+const VIDEO_HEIGHT = 660;
 
 // The sample page the video button is shown on: a heading, a player with
 // a still picture drawn on a canvas, and some text, light or dark as the
@@ -273,7 +281,7 @@ function chromeStub(messages, menu) {
 async function shootVideo(browser, encoder, look, opts) {
   const messages = JSON.parse(fs.readFileSync(path.join(EXTENSION, "_locales", "en", "messages.json"), "utf8"));
   const context = await browser.newContext({
-    viewport: { width: 960, height: 600 },
+    viewport: { width: 960, height: VIDEO_HEIGHT },
     deviceScaleFactor: opts.scale,
     colorScheme: look,
     reducedMotion: "reduce",
@@ -290,6 +298,11 @@ async function shootVideo(browser, encoder, look, opts) {
   await page.goto("https://videos.example.com/open-movie");
   await page.waitForFunction(() => !!document.getElementById("v").poster);
   await page.addScriptTag({ content: chromeStub(messages, sampleMenu()) });
+  // What the page holds before the extension's scripts run: the button's
+  // host is the element they add to it that shows.
+  await page.evaluate(() => {
+    globalThis.shotBefore = new Set(document.body.children);
+  });
   // The scripts the manifest injects, in its order.
   for (const file of ["rules.js", "links.js", "content.js"]) {
     await page.addScriptTag({ content: fs.readFileSync(path.join(EXTENSION, file), "utf8") });
@@ -297,16 +310,19 @@ async function shootVideo(browser, encoder, look, opts) {
   // The player starts: the button comes, as on a real page.
   await page.evaluate(() => document.getElementById("v").dispatchEvent(new Event("play")));
   const where = await page.waitForFunction(() => {
-    const host = [...document.body.children].find((e) => e.shadowRoot === null && e.style.zIndex === "2147483647");
-    if (!host || host.style.display !== "block") return null;
-    const r = host.getBoundingClientRect();
-    return { x: r.left, y: r.top };
+    const shown = [...document.body.children]
+      .filter((e) => !globalThis.shotBefore.has(e))
+      .map((e) => e.getBoundingClientRect())
+      .filter((r) => r.width > 0 && r.height > 0);
+    const r = shown.at(-1);
+    return r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null;
   });
   const { x, y } = await where.jsonValue();
-  // Open its menu, as a click on "Download video" does.
-  await page.mouse.click(x + 40, y + 13);
+  // Open its menu, as a click on "Download this video" does: the button
+  // fills most of the bar, so its middle is the button's.
+  await page.mouse.click(x, y);
   await page.waitForTimeout(400);
-  await page.mouse.move(5, 590);
+  await page.mouse.move(5, VIDEO_HEIGHT - 10);
   await page.waitForTimeout(200);
   if (problems.length) throw new Error(`video (${look}): ${problems.join("; ")}`);
   await save(encoder, `video-${look}`, await page.screenshot({ type: "png" }), opts);
@@ -316,11 +332,14 @@ async function shootVideo(browser, encoder, look, opts) {
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
   const { chromium } = loadPlaywright();
-  fs.mkdirSync(OUT, { recursive: true });
+  fs.mkdirSync(opts.out, { recursive: true });
   const windows = opts.only.filter((s) => s in WINDOWS);
-  const vite = windows.length ? await startVite() : null;
+  // The browser first, so a browser that does not start leaves no Vite
+  // behind.
   const browser = await chromium.launch();
+  let vite = null;
   try {
+    if (windows.length) vite = await startVite();
     const encoder = await browser.newPage();
     for (const kind of windows) {
       for (const look of LOOKS) await shootWindow(browser, encoder, vite.base, kind, look, opts);

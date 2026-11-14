@@ -5,8 +5,11 @@
   `docs/images/` except the Linux ones, each under 200 KB at twice the
   window's size; each was looked at in both looks. The richer sample list
   (`crates/ui/src/fixtures.rs`) was written with `UDM_WRITE_FIXTURES=1`, and
-  the frontend's tests pass on it (one expectation follows the sample's new
-  file name and category). The video button is the extension's content
+  the frontend's tests pass on it (their expectations follow the sample's
+  new file names and category). The download window's labels were drawn in
+  English, Spanish, Brazilian Portuguese, Ukrainian and German on the preview
+  page: the labels' column grows for the longest label and none runs into
+  its value, on the status and the Speed Limiter tabs. The video button is the extension's content
   scripts on a page the script serves to the browser itself, with the
   worker's menu built by `media.js`; the browser reached no network. The
   Linux pictures are the debug `udm-gui` and `udm-daemon` under Xvfb and

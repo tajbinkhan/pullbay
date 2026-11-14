@@ -8,6 +8,7 @@ use them. Run it after a window changes:
 node tools/screenshots/shoot.js              # every shot
 node tools/screenshots/shoot.js main video   # only these
 node tools/screenshots/shoot.js --scale 1.5  # smaller files
+node tools/screenshots/shoot.js --out /tmp/shots  # somewhere else, to compare
 ```
 
 | File | What it shows | Size (CSS pixels) |
@@ -17,7 +18,7 @@ node tools/screenshots/shoot.js --scale 1.5  # smaller files
 | `download-{light,dark}.webp` | The download window, with **Show details >>** clicked | 552 × 413 |
 | `options-{light,dark}.webp` | Options, on its General page | 436 × 505 |
 | `scheduler-{light,dark}.webp` | The Scheduler, with **Start download at** and **Turn off computer when done** ticked | 657 × 464 |
-| `video-{light,dark}.webp` | The extension's **Download this video** button and its menu on a sample page | 960 × 600 |
+| `video-{light,dark}.webp` | The extension's **Download this video** button and its menu on a sample page | 960 × 660 |
 | `linux-{light,dark}.webp` | The real window on Linux, taken by hand (below) | 1102 × 646 |
 
 The dialogs are at the size the shell opens them (`Label::size` in `crates/ui/src/windows.rs`).
